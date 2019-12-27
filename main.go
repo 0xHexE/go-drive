@@ -1,10 +1,30 @@
 /*
- * Copyright (c) 2019. Omkar Yadav. All rights reserved.
+ * Copyright (c) 2019 Omkar Yadav. All rights reserved.
  * Use of this source code is governed by a MIT-style
  * license that can be found in the LICENSE file.
  */
 
 package main
 
+import (
+	"github.com/httpsOmkar/go-drive/env_config"
+	"github.com/httpsOmkar/go-drive/storage_client"
+	"log"
+)
+
 func main() {
+	err, config := env_config.LoadConfig()
+
+	if err != nil {
+		log.Fatalf("Failed to read config %v", err)
+	}
+
+	log.Println("Setting up S3 client")
+	err, _ = storage_client.InitMinio(config)
+
+	if err != nil {
+		log.Fatalf("Failed to setup minio client %v", err)
+	}
+
+	log.Println("S3 server connected")
 }

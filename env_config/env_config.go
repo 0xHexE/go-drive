@@ -9,8 +9,9 @@ package env_config
 import "github.com/spf13/viper"
 
 type AppEnvConfig struct {
-	Server ServerConfig
-	Minio  MinioConfig
+	Server   ServerConfig
+	Database DatabaseConnection
+	Minio    MinioConfig
 }
 
 type MinioConfig struct {
@@ -20,6 +21,11 @@ type MinioConfig struct {
 
 type ServerConfig struct {
 	Port int
+}
+
+type DatabaseConnection struct {
+	Type          string
+	ConnectionUrl string
 }
 
 func LoadConfig() (error, *AppEnvConfig) {

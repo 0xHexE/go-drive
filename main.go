@@ -7,6 +7,7 @@
 package main
 
 import (
+	"github.com/httpsOmkar/go-drive/database_client"
 	"github.com/httpsOmkar/go-drive/env_config"
 	"github.com/httpsOmkar/go-drive/storage_client"
 	"log"
@@ -27,4 +28,12 @@ func main() {
 	}
 
 	log.Println("S3 server connected")
+
+	log.Println("Connecting to SQL Database")
+
+	err, _ = database_client.InitDatabase(config)
+
+	if err != nil {
+		log.Fatalf("Failed to connect to sql %v", err)
+	}
 }

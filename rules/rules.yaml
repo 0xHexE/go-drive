@@ -1,0 +1,12 @@
+# Inspired by Istio
+apiVersion: config.go-drive.io/v1alpha1
+kind: rule
+metadata:
+  name: "allow for upload file"
+  namespace: app
+spec:
+  match: "destination"
+  access:
+    read: "true"
+    write: "true"
+    delete: "true"

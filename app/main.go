@@ -9,15 +9,12 @@ package app
 import (
 	"context"
 	"github.com/google/uuid"
-	"github.com/httpsOmkar/go-drive/database_client"
 	"github.com/httpsOmkar/go-drive/env_config"
 	"github.com/httpsOmkar/go-drive/storage_client"
-	"github.com/jinzhu/gorm"
 	"io"
 )
 
 type App struct {
-	Database     *database_client.Database
 	Storage      *storage_client.StorageClient
 	AppEnvConfig *env_config.AppEnvConfig
 }
@@ -29,14 +26,6 @@ func (app *App) UploadFile(ctx context.Context, reader io.Reader, size int64) (e
 	if err != nil {
 		return err, nil
 	}
-
-	fileRecord := database_client.File{
-		Model:    gorm.Model{},
-		FileId:   "",
-		FileName: "",
-	}
-
-	app.Database.Database.Create(&fileRecord)
 
 	return nil, &fileId
 }

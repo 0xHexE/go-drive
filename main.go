@@ -8,7 +8,6 @@ package main
 
 import (
 	"github.com/httpsOmkar/go-drive/app"
-	"github.com/httpsOmkar/go-drive/database_client"
 	"github.com/httpsOmkar/go-drive/env_config"
 	"github.com/httpsOmkar/go-drive/http_server"
 	"github.com/httpsOmkar/go-drive/storage_client"
@@ -33,14 +32,7 @@ func main() {
 
 	log.Println("Connecting to SQL Database")
 
-	err, databaseClient := database_client.InitDatabase(appConfig)
-
-	if err != nil {
-		log.Fatalf("Failed to connect to sql %v", err)
-	}
-
 	appInstance := app.App{
-		Database:     databaseClient,
 		AppEnvConfig: appConfig,
 	}
 

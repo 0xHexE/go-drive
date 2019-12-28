@@ -45,7 +45,7 @@ func RuleGenerator(id, program string, env cel.Env) (error, *cel.Program) {
 		return issues.Err(), nil
 	}
 
-	// Check the program
+	// Check the progradocumentm
 	checked, issues := env.Check(parsed)
 	if issues != nil && issues.Err() != nil {
 		return issues.Err(), nil

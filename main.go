@@ -10,7 +10,7 @@ import (
 	"github.com/httpsOmkar/go-drive/app"
 	"github.com/httpsOmkar/go-drive/database_client"
 	"github.com/httpsOmkar/go-drive/env_config"
-	"github.com/httpsOmkar/go-drive/http_client"
+	"github.com/httpsOmkar/go-drive/http_server"
 	"github.com/httpsOmkar/go-drive/storage_client"
 	"log"
 )
@@ -23,7 +23,7 @@ func main() {
 	}
 
 	log.Println("Setting up S3 client")
-	err, storageClient := storage_client.InitMinio(appConfig)
+	err, _ = storage_client.InitMinio(appConfig)
 
 	if err != nil {
 		log.Fatalf("Failed to setup minio client %v", err)
@@ -39,11 +39,10 @@ func main() {
 		log.Fatalf("Failed to connect to sql %v", err)
 	}
 
-	app := app.App{
+	appInstance := app.App{
 		Database:     databaseClient,
-		Storage:      storageClient,
 		AppEnvConfig: appConfig,
 	}
 
-	http_client.InitHttp(app)
+	http_server.InitHttp(&appInstance)
 }

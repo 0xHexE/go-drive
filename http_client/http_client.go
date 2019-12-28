@@ -7,9 +7,28 @@
 package http_client
 
 import (
-	"github.com/httpsOmkar/go-drive/env_config"
-	"github.com/httpsOmkar/go-drive/storage_client"
+	"fmt"
+	"github.com/gorilla/mux"
+	"github.com/httpsOmkar/go-drive/app"
+	"log"
+	"net/http"
+	"time"
 )
 
-func InitHttp(config env_config.AppEnvConfig, client storage_client.MinioClient) {
+func InitHttp(config *app.App) {
+	router := mux.NewRouter()
+
+	srv := &http.Server{
+		Handler: router,
+		Addr: fmt.Sprintf(
+			"%s:%d",
+			config.AppEnvConfig.Server.ListenAddress,
+			config.AppEnvConfig.Server.Port,
+		),
+		// Good practice: enforce timeouts for servers you create!
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  30 * time.Second,
+	}
+
+	log.Fatal(srv.ListenAndServe())
 }

@@ -20,7 +20,8 @@ type MinioConfig struct {
 }
 
 type ServerConfig struct {
-	Port int
+	Port          int
+	ListenAddress string
 }
 
 type DatabaseConnection struct {

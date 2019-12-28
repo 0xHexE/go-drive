@@ -15,6 +15,12 @@ type Database struct {
 	Database *gorm.DB
 }
 
+type File struct {
+	gorm.Model
+	FileId   string `sql:"index"`
+	FileName string
+}
+
 // Init the database
 func InitDatabase(config *env_config.AppEnvConfig) (error, *Database) {
 	db, err := gorm.Open(config.Database.Type, config.Database.ConnectionUrl)

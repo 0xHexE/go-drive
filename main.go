@@ -30,8 +30,6 @@ func main() {
 
 	log.Println("S3 server connected")
 
-	log.Println("Connecting to SQL Database")
-
 	appInstance := app.App{
 		AppEnvConfig: appConfig,
 	}

@@ -6,7 +6,10 @@ metadata:
   namespace: app
 spec:
   match: "destination"
+  priority: 1
   access:
-    read: "true"
-    write: "true"
-    delete: "true"
+    "get": "true"
+    "list": "true"
+    "create": ""
+    "update": ""
+    "delete": ""

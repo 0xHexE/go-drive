@@ -47,7 +47,11 @@ func LoadConfig() (error, *AppEnvConfig) {
 	viper.AddConfigPath(".")
 
 	if err := viper.ReadInConfig(); err != nil {
-		return err, nil
+		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+			// Config file not found; ignore error
+		} else {
+			return err, nil
+		}
 	}
 
 	var appEnvConfig AppEnvConfig

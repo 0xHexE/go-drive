@@ -6,12 +6,16 @@
 
 package env_config
 
-import "github.com/spf13/viper"
+import (
+	"fmt"
+	"github.com/spf13/viper"
+)
 
 type AppEnvConfig struct {
 	Server   ServerConfig
-	Database DatabaseConnection
 	Minio    MinioConfig
+	Endpoint Endpoint
+	Upload   UploadConfig
 }
 
 type MinioConfig struct {
@@ -24,9 +28,17 @@ type ServerConfig struct {
 	ListenAddress string
 }
 
-type DatabaseConnection struct {
-	Type          string
-	ConnectionUrl string
+type UploadConfig struct {
+	MaxUploadSize int64
+	FilePath      string
+}
+
+type Endpoint struct {
+	ApiVersion, UploadUrl, DownloadUrl string
+}
+
+func (endpoint *Endpoint) GenUrl(endPoint string) string {
+	return fmt.Sprintf("/api/%s/%s", endpoint.ApiVersion, endPoint)
 }
 
 func LoadConfig() (error, *AppEnvConfig) {
@@ -38,5 +50,12 @@ func LoadConfig() (error, *AppEnvConfig) {
 		return err, nil
 	}
 
-	return nil, nil
+	var appEnvConfig AppEnvConfig
+	err := viper.Unmarshal(&appEnvConfig)
+
+	if err != nil {
+		return err, nil
+	}
+
+	return nil, &appEnvConfig
 }

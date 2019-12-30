@@ -24,6 +24,6 @@ func (app *App) UploadFile(ctx context.Context, fileName string, reader io.Reade
 	return err
 }
 
-func (app *App) DownloadFile() (error, *string) {
-	return nil, nil
+func (app *App) DownloadFile(ctx context.Context, name string) (error, io.Reader) {
+	return (*app.Storage).GetObject(ctx, name)
 }

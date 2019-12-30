@@ -153,3 +153,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Example config file
+config.yaml

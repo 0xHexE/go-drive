@@ -8,7 +8,6 @@ package http_server
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/httpsOmkar/go-drive/app"
 	"io"
@@ -25,8 +24,6 @@ func InitHttp(config *app.App) *mux.Router {
 		config.AppEnvConfig.Endpoint.GenUrl(config.AppEnvConfig.Endpoint.DownloadUrl),
 		HandleDownload(config),
 	)
-
-	fmt.Println(config.AppEnvConfig.Endpoint.GenUrl(config.AppEnvConfig.Endpoint.UploadUrl))
 
 	router.HandleFunc(
 		config.AppEnvConfig.Endpoint.GenUrl(config.AppEnvConfig.Endpoint.UploadUrl),

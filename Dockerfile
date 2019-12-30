@@ -15,14 +15,19 @@ FROM alpine:latest
 # Install the SSL certificates and curl
 RUN apk --no-cache add ca-certificates curl
 
-WORKDIR /root/
+WORKDIR /root
+
 COPY --from=builder /app/app .
-RUN find . -name "*.go" -type f -delete
 
 # Health check for the app
 HEALTHCHECK --interval=10s --timeout=3s \
 CMD curl --fail http://localhost:$PORT/_health || exit 1
 
 EXPOSE $PORT
-USER 1000
-CMD ["./app"]
+
+RUN chown nobody:nobody ./go-drive && chmod 0700 ./go-drive
+RUN chmod +x ./go-drive
+
+USER nobody
+
+CMD ["./go-drive"]
